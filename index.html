@@ -1,146 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ads on Monetage mini app </title>
+    <title>The_Anisur_Earnings</title>
     <style>
         body {
-            margin: 0;
-            padding: 0;
-            background-color: #121212;
-            color: #fff;
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            margin: 0; padding: 20px; background-color: #121212; color: #fff;
+            font-family: Arial, sans-serif; display: flex; justify-content: center;
+            align-items: center; min-height: 100vh; box-sizing: border-box;
         }
         .container {
-            text-align: center;
-            background: #1f1f1f;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-            width: 300px;
+            text-align: center; background: #1f1f1f; padding: 20px; border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7); width: 100%; max-width: 350px; box-sizing: border-box;
         }
-        .container h1 {
-            font-size: 20px;
-            color: green;
-            margin-bottom: 10px;
+        .announcement-box {
+            background-color: #ffc107; color: #333; padding: 10px; border-radius: 8px;
+            margin-bottom: 15px; font-size: 14px; text-align: center; display: none; 
         }
+        .container h1 { font-size: 22px; color: green; margin-bottom: 10px; }
         .developer {
-            font-size: 12px;
-            background-color: green;
-            padding: 5px 10px;
-            border-radius: 5px;
-            margin-bottom: 15px;
-            display: inline-block;
-            cursor: pointer;
+            font-size: 12px; background-color: green; padding: 5px 10px; border-radius: 5px;
+            margin-bottom: 15px; display: inline-block; cursor: pointer;
         }
-        .stats {
-            margin: 10px 0;
-        }
-        .stats p {
-            margin: 5px 0;
-            font-size: 14px;
-        }
+        .stats p { margin: 8px 0; font-size: 16px; }
         .progress-circle {
-            width: 80px;
-            height: 80px;
-            border: 4px solid green;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 10px auto;
-        }
-        .progress-circle span {
-            font-size: 18px;
-            font-weight: bold;
+            width: 90px; height: 90px; border: 5px solid green; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            margin: 15px auto; font-size: 20px; font-weight: bold;
         }
         .buttons button {
-            width: 90%;
-            margin: 5px 0;
-            padding: 10px;
-            font-size: 14px;
-            border: none;
-            border-radius: 5px;
-            color: white;
-            background: green;
-            cursor: pointer;
+            width: 100%; margin: 6px 0; padding: 12px; font-size: 16px; border: none;
+            border-radius: 8px; color: white; background: green; cursor: pointer;
+            transition: background-color 0.3s;
         }
-        .buttons button:hover {
-            background: darkorange;
-        }
+        .buttons button:hover { background: darkorange; }
+        .buttons button:disabled { background-color: #555; cursor: not-allowed; }
+        
+        /* নতুন বাটন এর স্টাইল */
+        .secondary-buttons { display: flex; gap: 10px; margin-top: 10px; }
+        .secondary-buttons button { background-color: #007bff; }
+        .secondary-buttons button:hover { background-color: #0056b3; }
+        
         .withdraw-section {
-            margin-top: 20px;
-            display: none;
-            padding: 20px;
-            background-color: #2a2a2a;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            margin-top: 20px; display: none; padding: 20px; background-color: #2a2a2a; border-radius: 10px;
         }
-        .withdraw-section input, .withdraw-section select {
-            width: 100%;
-            padding: 12px;
-            margin: 8px 0;
-            border-radius: 5px;
-            border: 2px solid #555;
-            background-color: #333;
-            color: #fff;
-        }
-        .withdraw-section input:focus, .withdraw-section select:focus {
-            border-color: green;
-            outline: none;
+        .withdraw-section input, .withdraw-section select, .withdraw-section textarea {
+            width: 100%; padding: 12px; margin: 8px 0; border-radius: 5px; border: 2px solid #555;
+            background-color: #333; color: #fff; box-sizing: border-box;
         }
         .withdraw-section button {
-            background-color: green;
-            width: 100%;
-            padding: 12px;
-            font-size: 16px;
-            margin-top: 15px;
-            border-radius: 5px;
-            cursor: pointer;
+            background-color: green; width: 100%; padding: 12px; font-size: 16px;
+            margin-top: 15px; border-radius: 5px; cursor: pointer;
         }
-        .withdraw-section button:hover {
-            background-color: #006400;
+        #withdraw-status { color: orange; font-size: 14px; margin-top: 10px; min-height: 20px; }
+        .user-info p { font-size: 16px; margin: 5px 0; font-weight: bold; }
+        .update-notice {
+            background-color: #dc3545; color: white; padding: 15px; border-radius: 8px;
+            margin-bottom: 15px; font-size: 16px; text-align: center; display: none;
         }
-        #withdraw-status {
-            color: red;
-            font-size: 14px;
-            margin-top: 10px;
+        /* নতুন ফিচার: মোডাল এর জন্য CSS */
+        .modal {
+            display: none; position: fixed; z-index: 1000; left: 0; top: 0;
+            width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.8);
         }
-        .user-info {
-            margin: 10px 0;
+        .modal-content {
+            background-color: #2a2a2a; margin: 20% auto; padding: 20px;
+            border: 1px solid #888; width: 90%; max-width: 500px; border-radius: 8px; color: #fff;
         }
-        .user-info p {
-            font-size: 14px;
-            margin: 5px 0;
-        }
+        .close-btn { color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer; }
+        .modal-content table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        .modal-content th, .modal-content td { border: 1px solid #555; padding: 8px; text-align: left;}
+        .modal-content th { background-color: green; }
     </style>
-<link rel="me" href="https://www.blogger.com/profile/12615525391666988711" />
-<meta name='google-adsense-platform-account' content='ca-host-pub-1556223355139109'/>
-<meta name='google-adsense-platform-domain' content='blogspot.com'/>
-<link rel="me" href="https://www.blogger.com/profile/10983280640489625734" />
-<meta name='google-adsense-platform-account' content='ca-host-pub-1556223355139109'/>
-<meta name='google-adsense-platform-domain' content='blogspot.com'/>
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
 </head>
 <body>
-    <div class="container">
-        <h1>The_Anisur_Earnings </h1>
-        <div class="developer" onclick="window.location.href='https://t.me/@romjanahmed4t'">Developer by JR Zone 2025 </div>
+    <div class="container" id="app-container">
+        <div class="announcement-box" id="announcement-box"></div>
+        <div class="update-notice" id="update-notice">Please update your app to the latest version to continue.</div>
+
+        <h1>The_Anisur_Earnings</h1>
+        <div class="developer" onclick="window.location.href='https://t.me/juelranacpa1'">Developer by JR Zone 2025</div>
         
-        <!-- Display User Info -->
         <div class="user-info">
-            <p>Welcome, <span id="user-name"></span></p>
+            <p>Welcome, <span id="user-name">Loading...</span></p>
         </div>
 
         <div class="stats">
             <p>Watched Ads: <span id="watched-ads">0</span></p>
-            <p>Earned Points: <span id="earned-points">0</span></p>
+            <p>Earned Points: <span id="earned-points">0.00</span></p>
+            <p>Today's Ads: <span id="daily-ads-watched">0</span> / <span id="daily-limit">...</span></p>
         </div>
         <div class="progress-circle">
             <span id="ads-progress">0%</span>
@@ -148,135 +100,325 @@
         <div class="buttons">
             <button id="watch-ad-btn" onclick="watchAd()">Watch Ad</button>
             <button id="auto-ad-btn" onclick="startAutoAds()">Auto Show Ads</button>
-            <button id="stop-auto-btn" onclick="stopAutoAds()">Stop Auto Ads</button>
+            <button id="stop-auto-btn" onclick="stopAutoAds()" disabled>Stop Auto Ads</button>
             <button id="withdraw-btn" onclick="showWithdrawForm()">Withdraw</button>
         </div>
 
-        <!-- Withdraw Section -->
+        <!-- নতুন ফিচার: সেকেন্ডারি বাটন -->
+        <div class="secondary-buttons">
+            <button onclick="showProfileModal()">My Profile</button>
+            <button onclick="showLeaderboard()">Leaderboard</button>
+            <button onclick="showSupportModal()">Support</button>
+        </div>
+
         <div class="withdraw-section" id="withdraw-section">
             <h3 style="color: orange; margin-bottom: 15px;">Withdrawal Request</h3>
             <input type="number" id="withdraw-amount" placeholder="Enter Points to Withdraw" />
-            <select id="payment-method">
-                <option value="bkash">Bkash</option>
-                <option value="nagad">Nagad</option>
-                <option value="manual">Manual</option>
-            </select>
+            <select id="payment-method"></select>
             <input type="text" id="withdraw-phone" placeholder="Enter Phone Number" />
-            <button onclick="withdrawPoints()">Withdraw</button>
+            <button onclick="withdrawPoints()">Submit Request</button>
             <p id="withdraw-status"></p>
         </div>
     </div>
 
-    <script src='//jagnaimsee.net/vignette.min.js' data-zone='9892594' data-sdk='show_9892594'></script>
+    <!-- নতুন ফিচার: প্রোফাইল, লিডারবোর্ড ও সাপোর্টের জন্য মোডাল -->
+    <div id="appModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <div id="modal-body"></div>
+        </div>
+    </div>
 
     <script>
-        const MIN_WITHDRAW_POINTS = 5;
-        const ADMIN_USER_ID = 7400962448;
-        const BOT_TOKEN = "7799196873:AAGoDltGbp2L-gQ-9Iua9d9PYb1BizgXDkE";
-        let watchedAdsCount = 0;
+    const firebaseConfig = {
+    apiKey: "AIzaSyD-AXE8ZKzMktTVuzmSyUbAtq3UqcT2ORw",
+    authDomain: "the-anisur-earnings-2025.firebaseapp.com",
+    databaseURL: "https://the-anisur-earnings-2025-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "the-anisur-earnings-2025",
+    storageBucket: "the-anisur-earnings-2025.firebasestorage.app",
+    messagingSenderId: "579075127891",
+    appId: "1:579075127891:web:25c02c16e5b950dd54a4a6",
+    measurementId: "G-YFH504KSYX"
+    };
+        
+        const currentAppVersion = "1.0";
+
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        
+        let userData = {};
         let earnedPoints = 0.00;
+        let watchedAdsCount = 0;
         let autoAdInterval;
+        
+        let appSettings = {
+            minWithdrawPoints: 5, pointsPerAd: 1.00, autoAdIntervalSeconds: 5,
+            adZoneId: '9892594', paymentMethods: ['bkash', 'nagad', 'manual'], announcement: '',
+            adsEnabled: true, dailyAdLimit: 20, referrerBonus: 5, refereeBonus: 2, currentVersion: "1.0"
+        };
+        
+        const userId = "user_" + (prompt("Enter your user ID (e.g., 12345):", "12345") || "12345");
+        const userName = "@" + (prompt("Enter your username:", "exampleUser") || "exampleUser");
+        document.getElementById("user-name").textContent = userName;
+        
+        let referrerId = null;
+        if (!localStorage.getItem('isExistingUser_' + userId)) {
+            const referrerInput = prompt("Enter Referrer User ID (if any). Leave empty if none.");
+            if (referrerInput) { referrerId = "user_" + referrerInput.trim(); }
+        }
+        
+        const userRef = database.ref('users/' + userId);
+        const settingsRef = database.ref('settings');
 
-        // Simulate user name from Telegram User ID (replace with actual logic to get user info)
-        const telegramUserName = "@exampleUser"; // Replace this line with the actual logic to fetch username
-        document.getElementById("user-name").textContent = telegramUserName;
+        settingsRef.on('value', (snapshot) => {
+            const settings = snapshot.val();
+            if (settings) {
+                appSettings = { ...appSettings, ...settings };
+                if (appSettings.currentVersion && appSettings.currentVersion !== currentAppVersion) {
+                    document.getElementById('update-notice').style.display = 'block';
+                    document.getElementById('app-container').style.pointerEvents = 'none';
+                    return;
+                }
+                if (settings.adZoneId && appSettings.adZoneId !== settings.adZoneId) {
+                    appSettings.adZoneId = settings.adZoneId;
+                    loadAdScript(appSettings.adZoneId); 
+                } else if (!window.adScriptLoaded) {
+                    loadAdScript(appSettings.adZoneId);
+                }
+                updateDynamicUI();
+            }
+        });
+        
+        function updateDynamicUI() {
+            document.getElementById('watch-ad-btn').disabled = !appSettings.adsEnabled;
+            document.getElementById('watch-ad-btn').innerText = appSettings.adsEnabled ? "Watch Ad" : "Ads Disabled by Admin";
+            if (!appSettings.adsEnabled) stopAutoAds();
+            const announcementBox = document.getElementById('announcement-box');
+            announcementBox.style.display = appSettings.announcement ? 'block' : 'none';
+            announcementBox.textContent = appSettings.announcement;
 
-        // Check if user data is saved in localStorage
-        if (localStorage.getItem('watchedAdsCount')) {
-            watchedAdsCount = parseInt(localStorage.getItem('watchedAdsCount'));
-            earnedPoints = parseFloat(localStorage.getItem('earnedPoints'));
+            const paymentMethodSelect = document.getElementById('payment-method');
+            paymentMethodSelect.innerHTML = '';
+            const methods = appSettings.paymentMethodsCSV ? appSettings.paymentMethodsCSV.split(',') : appSettings.paymentMethods;
+            methods.forEach(method => {
+                const option = document.createElement('option');
+                option.value = method.trim();
+                option.textContent = method.trim().charAt(0).toUpperCase() + method.trim().slice(1);
+                paymentMethodSelect.appendChild(option);
+            });
+            document.getElementById('daily-limit').textContent = appSettings.dailyAdLimit;
+        }
+
+        userRef.on('value', (snapshot) => {
+            const data = snapshot.val();
+            if (data && data.isBanned) {
+                document.body.innerHTML = `<div style="text-align:center; padding-top: 50px;"><h1>Access Denied</h1><p>Your account has been banned.</p></div>`;
+                return;
+            }
+            if (data) {
+                localStorage.setItem('isExistingUser_' + userId, 'true');
+                userData = data;
+                watchedAdsCount = data.watchedAds || 0;
+                earnedPoints = data.earnedPoints || 0.00;
+                // নতুন ফিচার: ব্যক্তিগত নোটিশ চেক
+                if (data.notice) {
+                    alert(`Admin Notice: ${data.notice}`);
+                    userRef.child('notice').remove(); // একবার দেখানোর পর মুছে ফেলা হবে
+                }
+            } else {
+                const initialPoints = referrerId ? appSettings.refereeBonus : 0;
+                userData = {
+                    userName: userName, watchedAds: 0, earnedPoints: initialPoints, isBanned: false,
+                    lastAdWatchDate: '', dailyAdsWatched: 0, createdAt: new Date().toISOString()
+                };
+                userRef.set(userData);
+                if (referrerId) {
+                    database.ref('users/' + referrerId).transaction((referrerData) => {
+                        if (referrerData) {
+                            referrerData.earnedPoints = (referrerData.earnedPoints || 0) + appSettings.referrerBonus;
+                        }
+                        return referrerData;
+                    });
+                }
+            }
+            updateUI();
+        });
+        
+        function getTodayDateString() {
+            const today = new Date();
+            return `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+        }
+
+        function checkDailyAdLimit() {
+            const todayStr = getTodayDateString();
+            if (userData.lastAdWatchDate !== todayStr) {
+                userData.dailyAdsWatched = 0;
+                userRef.update({ dailyAdsWatched: 0, lastAdWatchDate: todayStr });
+            }
+            if (userData.dailyAdsWatched >= appSettings.dailyAdLimit) {
+                document.getElementById('watch-ad-btn').disabled = true;
+                document.getElementById('auto-ad-btn').disabled = true;
+                document.getElementById('watch-ad-btn').innerText = "Daily Limit Reached";
+                stopAutoAds();
+                return false;
+            }
+            return true;
+        }
+
+        function loadAdScript(zoneId) {
+            if (!zoneId || window.adScriptLoaded) return;
+            window.adScriptLoaded = true;
+            const script = document.createElement('script');
+            script.src = '//jagnaimsee.net/vignette.min.js';
+            script.setAttribute('data-zone', zoneId);
+            document.body.appendChild(script);
+        }
+
+        function updateUI() {
             document.getElementById('watched-ads').textContent = watchedAdsCount;
             document.getElementById('earned-points').textContent = earnedPoints.toFixed(2);
+            document.getElementById('daily-ads-watched').textContent = userData.dailyAdsWatched || 0;
+            updateProgressCircle();
+            checkDailyAdLimit();
         }
 
-        // Function to watch an ad and update stats
         function watchAd() {
-            if (typeof show_9892594 === 'function') {
-                show_9892594().then(() => {
-                    // When the ad is shown, we add points
-                    watchedAdsCount++;
-                    document.getElementById('watched-ads').textContent = watchedAdsCount;
-                    earnedPoints += 1; // Add 1 points per ad watched
-                    document.getElementById('earned-points').textContent = earnedPoints.toFixed(2);
-                    localStorage.setItem('watchedAdsCount', watchedAdsCount);
-                    localStorage.setItem('earnedPoints', earnedPoints.toFixed(2));
-
-                    // Update progress circle
-                    updateProgressCircle();
+            if (!checkDailyAdLimit()) return;
+            const adFunctionName = 'show_' + appSettings.adZoneId;
+            if (typeof window[adFunctionName] === 'function') {
+                window[adFunctionName]().then(() => {
+                    const todayStr = getTodayDateString();
+                    let dailyCount = (userData.lastAdWatchDate !== todayStr) ? 0 : (userData.dailyAdsWatched || 0);
+                    userRef.update({
+                        watchedAds: watchedAdsCount + 1,
+                        earnedPoints: earnedPoints + appSettings.pointsPerAd,
+                        dailyAdsWatched: dailyCount + 1,
+                        lastAdWatchDate: todayStr
+                    });
                 });
-            }
+            } else { console.error("Ad function not available."); }
         }
 
-        // Update progress circle based on watched ads
         function updateProgressCircle() {
-            const percentage = (watchedAdsCount / 10) * 100;
+            const percentage = (watchedAdsCount % 10) * 10;
             document.getElementById('ads-progress').textContent = `${percentage}%`;
         }
 
-        // Function to start auto showing ads
         function startAutoAds() {
-            autoAdInterval = setInterval(watchAd, 5000); // Auto show ad every 5 seconds
+            if (!checkDailyAdLimit()) return;
+            autoAdInterval = setInterval(watchAd, appSettings.autoAdIntervalSeconds * 1000);
             document.getElementById('auto-ad-btn').disabled = true;
             document.getElementById('stop-auto-btn').disabled = false;
         }
 
-        // Function to stop auto ads
         function stopAutoAds() {
             clearInterval(autoAdInterval);
             document.getElementById('auto-ad-btn').disabled = false;
             document.getElementById('stop-auto-btn').disabled = true;
         }
 
-        // Function to show withdraw form
-        function showWithdrawForm() {
-            document.getElementById('withdraw-section').style.display = 'block';
-        }
+        function showWithdrawForm() { document.getElementById('withdraw-section').style.display = 'block'; }
 
-        // Function to handle withdrawal
         function withdrawPoints() {
-            const amount = document.getElementById('withdraw-amount').value;
-            const paymentMethod = document.getElementById('payment-method').value;
-            const phoneNumber = document.getElementById('withdraw-phone').value;
+            const amount = parseFloat(document.getElementById('withdraw-amount').value);
+            const statusEl = document.getElementById('withdraw-status');
+            if (!amount || amount <= 0) { statusEl.textContent = "Please enter a valid amount."; return; }
+            if (amount < appSettings.minWithdrawPoints) { statusEl.textContent = `Minimum withdrawal is ${appSettings.minWithdrawPoints} points.`; return; }
+            if (amount > earnedPoints) { statusEl.textContent = `Insufficient balance.`; return; }
 
-            if (amount < MIN_WITHDRAW_POINTS) {
-                document.getElementById('withdraw-status').textContent = `Minimum withdrawal amount is ${MIN_WITHDRAW_POINTS} points.`;
-                return;
-            }
-
-            if (amount > earnedPoints) {
-                document.getElementById('withdraw-status').textContent = `Insufficient balance. You have ${earnedPoints.toFixed(2)} points.`;
-                return;
-            }
-
-            // Subtract points from earnedPoints after successful withdrawal
-            earnedPoints -= parseFloat(amount);
-            document.getElementById('earned-points').textContent = earnedPoints.toFixed(2);
-
-            // Save the updated balance in localStorage
-            localStorage.setItem('earnedPoints', earnedPoints.toFixed(2));
-
-            // Send withdrawal request to admin via Telegram
-            const message = `Withdrawal Request from ${telegramUserName}:\nAmount: ${amount} points\nPayment Method: ${paymentMethod}\nPhone Number: ${phoneNumber}`;
-            sendWithdrawRequestToAdmin(message);
-
-            // Show success message
-            document.getElementById('withdraw-status').textContent = 'Withdrawal request sent successfully!';
-
-            // Clear form
-            document.getElementById('withdraw-amount').value = '';
-            document.getElementById('withdraw-phone').value = '';
+            database.ref('withdrawals').push().set({
+                userId: userId, userName: userName, amount: amount,
+                method: document.getElementById('payment-method').value,
+                phone: document.getElementById('withdraw-phone').value,
+                status: 'Pending', timestamp: new Date().toISOString()
+            }).then(() => {
+                userRef.update({ earnedPoints: earnedPoints - amount });
+                statusEl.textContent = 'Withdrawal request sent successfully!';
+                document.getElementById('withdraw-amount').value = '';
+                document.getElementById('withdraw-phone').value = '';
+                setTimeout(() => {
+                    document.getElementById('withdraw-section').style.display = 'none';
+                    statusEl.textContent = '';
+                }, 3000);
+            }).catch(error => { statusEl.textContent = 'Error sending request.'; });
         }
 
-        // Function to send withdrawal request to admin
-        function sendWithdrawRequestToAdmin(message) {
-            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${ADMIN_USER_ID}&text=${encodeURIComponent(message)}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.ok) {
-                        console.log('Message sent to admin');
+        // --- নতুন ফিচার এর ফাংশন ---
+        const modal = document.getElementById('appModal');
+        const modalBody = document.getElementById('modal-body');
+        function closeModal() { modal.style.display = 'none'; }
+        
+        function showProfileModal() {
+            const regDate = userData.createdAt ? new Date(userData.createdAt).toLocaleDateString('en-GB') : 'N/A';
+            let content = `<h2>My Profile</h2>
+                <p><strong>Username:</strong> ${userData.userName}</p>
+                <p><strong>Points:</strong> ${earnedPoints.toFixed(2)}</p>
+                <p><strong>Total Ads Watched:</strong> ${watchedAdsCount}</p>
+                <p><strong>Registered On:</strong> ${regDate}</p>
+                <h3>Withdrawal History</h3>`;
+            
+            database.ref('withdrawals').orderByChild('userId').equalTo(userId).once('value', snapshot => {
+                const history = snapshot.val();
+                if(!history) {
+                    content += "<p>No history found.</p>";
+                } else {
+                    content += '<table><thead><tr><th>Date</th><th>Amount</th><th>Method</th><th>Status</th></tr></thead><tbody>';
+                    const sortedHistory = Object.values(history).sort((a,b) => new Date(b.timestamp) - new Date(a.timestamp));
+                    sortedHistory.forEach(req => {
+                        content += `<tr>
+                            <td>${new Date(req.timestamp).toLocaleDateString()}</td>
+                            <td>${req.amount}</td>
+                            <td>${req.method}</td>
+                            <td>${req.status}</td>
+                        </tr>`;
+                    });
+                    content += '</tbody></table>';
+                }
+                modalBody.innerHTML = content;
+                modal.style.display = 'block';
+            });
+        }
+
+        function showLeaderboard() {
+            modalBody.innerHTML = '<h2>Top Earners</h2><p>Loading...</p>';
+            modal.style.display = 'block';
+            database.ref('users').orderByChild('earnedPoints').limitToLast(20).once('value', snapshot => {
+                const users = snapshot.val();
+                if(!users) { modalBody.innerHTML += "<p>No users found.</p>"; return; }
+                const sortedUsers = Object.values(users).sort((a, b) => (b.earnedPoints || 0) - (a.earnedPoints || 0));
+                
+                let content = '<table><thead><tr><th>Rank</th><th>Username</th><th>Points</th></tr></thead><tbody>';
+                sortedUsers.forEach((user, index) => {
+                    if(!user.isBanned) {
+                        content += `<tr><td>${index+1}</td><td>${user.userName}</td><td>${(user.earnedPoints || 0).toFixed(2)}</td></tr>`;
                     }
-                })
-                .catch(error => console.error('Error sending message:', error));
+                });
+                content += '</tbody></table>';
+                modalBody.innerHTML = content;
+            });
+        }
+
+        function showSupportModal() {
+            modalBody.innerHTML = `<h2>Contact Support</h2>
+                <p>Describe your issue below. We will get back to you.</p>
+                <textarea id="support-message" rows="5" placeholder="Type your message here..." style="width: 100%;"></textarea>
+                <button onclick="submitSupportTicket()" style="width:100%; padding:10px; margin-top:10px;">Send Message</button>`;
+            modal.style.display = 'block';
+        }
+
+        function submitSupportTicket() {
+            const message = document.getElementById('support-message').value.trim();
+            if (message) {
+                database.ref('supportTickets').push().set({
+                    userId: userId, userName: userName, message: message,
+                    timestamp: new Date().toISOString(), status: 'Open'
+                }).then(() => {
+                    alert('Your message has been sent successfully!');
+                    closeModal();
+                });
+            } else {
+                alert('Please type a message.');
+            }
         }
     </script>
 </body>
